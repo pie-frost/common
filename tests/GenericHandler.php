@@ -5,6 +5,7 @@ use GuzzleHttp\Psr7\Response;
 use PIEFrost\Common\BaseHandler;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class GenericHandler extends BaseHandler
 {
@@ -19,7 +20,12 @@ class GenericHandler extends BaseHandler
         return $this;
     }
 
-    public function __invoke(RequestInterface $request): ResponseInterface
+    /**
+     * Handles a request and produces a response.
+     *
+     * May call other collaborating code to generate the response.
+     */
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new Response(200, [
             'Content-Type' => ['text/plain']

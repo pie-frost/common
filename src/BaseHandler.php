@@ -2,8 +2,6 @@
 declare(strict_types=1);
 namespace PIEFrost\Common;
 use PIEFrost\Common\Interfaces\HandlerInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 abstract class BaseHandler implements HandlerInterface
 {
@@ -14,6 +12,4 @@ abstract class BaseHandler implements HandlerInterface
         $this->vars = $vars;
         return $this;
     }
-
-    abstract public function __invoke(RequestInterface $request): ResponseInterface;
 }
