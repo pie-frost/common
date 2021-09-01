@@ -1,9 +1,12 @@
 <?php
 namespace PIEFrost\Common\Tests;
 
-use PIEFrost\Common\Interfaces\HandlerInterface;
+use GuzzleHttp\Psr7\Response;
+use PIEFrost\Common\BaseHandler;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
-class GenericHandler implements HandlerInterface
+class GenericHandler extends BaseHandler
 {
     public array $vars = [];
     /**
@@ -14,5 +17,12 @@ class GenericHandler implements HandlerInterface
     {
         $this->vars = $vars;
         return $this;
+    }
+
+    public function __invoke(RequestInterface $request): ResponseInterface
+    {
+        return new Response(200, [
+            'Content-Type' => ['text/plain']
+        ],json_encode($this->vars));
     }
 }

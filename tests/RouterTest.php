@@ -6,6 +6,7 @@ use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
+use PIEFrost\Common\BaseHandler;
 use PIEFrost\Common\Router;
 use function FastRoute\simpleDispatcher;
 
@@ -40,6 +41,7 @@ class RouterTest extends TestCase
             'method' => $method,
             'uri' => $uri
         ]);
+        $this->assertInstanceOf(BaseHandler::class, $handler);
         $this->assertInstanceOf(GenericHandler::class, $handler);
         $this->assertSame($handler->vars, $vars);
     }
@@ -52,6 +54,7 @@ class RouterTest extends TestCase
         $routes = new Router($this->getRoutes());
         $request = new Request($method, $uri);
         $handler = $routes->route($request);
+        $this->assertInstanceOf(BaseHandler::class, $handler);
         $this->assertInstanceOf(GenericHandler::class, $handler);
         $this->assertSame($handler->vars, $vars);
     }
@@ -64,6 +67,7 @@ class RouterTest extends TestCase
         $_SERVER['REQUEST_METHOD'] = $method;
         $_SERVER['REQUEST_URI'] = $uri;
         $handler = $routes->route();
+        $this->assertInstanceOf(BaseHandler::class, $handler);
         $this->assertInstanceOf(GenericHandler::class, $handler);
         $this->assertSame($handler->vars, $vars);
     }
