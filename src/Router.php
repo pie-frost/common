@@ -10,10 +10,18 @@ use Psr\Http\Message\RequestInterface;
 class Router
 {
     protected Dispatcher $dispatcher;
+    protected ?RuntimeState $state = null;
 
-    public function __construct(Dispatcher $dispatcher)
+    public function __construct(Dispatcher $dispatcher, ?RuntimeState $state = null)
     {
         $this->dispatcher = $dispatcher;
+        $this->state = $state;
+    }
+
+    public function injectState(RuntimeState $state): self
+    {
+        $this->state = $state;
+        return $this;
     }
 
     /**
@@ -96,8 +104,11 @@ class Router
                 if (!class_exists($handler)) {
                     throw new RouteException("Unknown class: {$handler}");
                 }
-                return (new $handler)
-                    ->setVars($vars);
+                $object = new $handler;
+                if (!is_null($this->state)) {
+                    $object->injectState($this->state);
+                }
+                return $object->setVars($vars);
             default:
                 throw new RouteException("Bad HTTP Request");
         }
