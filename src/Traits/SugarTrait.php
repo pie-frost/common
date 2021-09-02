@@ -10,6 +10,9 @@ use Twig\Error\{
     RuntimeError,
     SyntaxError
 };
+use PIEFrost\Common\Utilities;
+use PIEFrost\Common\ValueObjects\Redirect;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Syntactic Sugar!
@@ -26,6 +29,19 @@ trait SugarTrait
     public function db(): EasyDB
     {
         return $this->state->getEasyDB();
+    }
+
+    public function respond(
+        Redirect|array|string $generic,
+        array $headers = []
+    ): ResponseInterface {
+        if ($generic instanceof Redirect) {
+            return $generic->respond();
+        }
+        if (is_array($generic)) {
+            return Utilities::jsonResponse($generic, $headers);
+        }
+        return Utilities::htmlResponse($generic, $headers);
     }
 
     /**
