@@ -20,7 +20,7 @@ class Utilities
 
     public static function htmlResponse(
         string $document,
-        array $headers,
+        array $headers = [],
         int $statusCode = 200
     ): Response {
         return new Response(
