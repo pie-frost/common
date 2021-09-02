@@ -10,6 +10,7 @@ class RuntimeState
 {
     protected ?EasyDB $db = null;
     protected ?Environment $twig = null;
+    protected ?Router $router = null;
 
     public function getEasyDB(): EasyDB
     {
@@ -17,6 +18,14 @@ class RuntimeState
             throw new DependencyException("Database not injected");
         }
         return $this->db;
+    }
+    
+    public function getRouter(): Router
+    {
+        if (is_null($this->router)) {
+            throw new DependencyException("Router not injected");
+        }
+        return $this->router;
     }
 
     public function getTwig(): Environment
@@ -30,6 +39,12 @@ class RuntimeState
     public function withEasyDB(EasyDB $db): self
     {
         $this->db = $db;
+        return $this;
+    }
+    
+    public function withRouter(Router $router): self
+    {
+        $this->router = $router;
         return $this;
     }
 
