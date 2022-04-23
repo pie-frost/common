@@ -104,6 +104,7 @@ class Router
                 if (!class_exists($handler)) {
                     throw new RouteException("Unknown class: {$handler}");
                 }
+                /** @var HandlerInterface $object */
                 $object = new $handler;
                 if (!is_null($this->state)) {
                     $object->injectState($this->state);
