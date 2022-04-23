@@ -11,6 +11,7 @@ class Utilities
         array $headers = [],
         int $statusCode = 200
     ): Response {
+        $headers['Content-Type'] = 'application/json';
         return new Response(
             $statusCode,
             $headers,
