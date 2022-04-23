@@ -31,6 +31,18 @@ trait SugarTrait
         return $this->state->getEasyDB();
     }
 
+    /**
+     * @param array $data
+     * @param array $headers
+     * @return ResponseInterface
+     */
+    public function json(
+        array $data,
+        array $headers = []
+    ): ResponseInterface {
+        return Utilities::jsonResponse($data, $headers);
+    }
+
     public function respond(
         Redirect|array|string $generic,
         array $headers = []
