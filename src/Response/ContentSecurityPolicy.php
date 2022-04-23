@@ -5,6 +5,7 @@ namespace PIEFrost\Common\Response;
 use ParagonIE\CSPBuilder\CSPBuilder;
 use PIEFrost\Common\Interfaces\ResponseDecoratorInterface;
 use Psr\Http\Message\ResponseInterface;
+use TypeError;
 
 class ContentSecurityPolicy implements ResponseDecoratorInterface
 {
@@ -24,7 +25,7 @@ class ContentSecurityPolicy implements ResponseDecoratorInterface
     {
         $output = $this->builder->injectCSPHeader(clone $response);
         if (!($output instanceof ResponseInterface)) {
-            throw new \TypeError();
+            throw new TypeError();
         }
         return $output;
     }
