@@ -38,22 +38,24 @@ trait SugarTrait
      */
     public function json(
         array $data,
-        array $headers = []
+        array $headers = [],
+        int $status = 200
     ): ResponseInterface {
-        return Utilities::jsonResponse($data, $headers);
+        return Utilities::jsonResponse($data, $headers, $status);
     }
 
     public function respond(
         Redirect|array|string $generic,
-        array $headers = []
+        array $headers = [],
+        int $status = 200
     ): ResponseInterface {
         if ($generic instanceof Redirect) {
             return $generic->respond();
         }
         if (is_array($generic)) {
-            return Utilities::jsonResponse($generic, $headers);
+            return Utilities::jsonResponse($generic, $headers, $status);
         }
-        return Utilities::htmlResponse($generic, $headers);
+        return Utilities::htmlResponse($generic, $headers, $status);
     }
 
     /**
