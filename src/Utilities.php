@@ -74,6 +74,9 @@ class Utilities
              * @var string $class
              */
             [$func, $class] = $found;
+            if (in_array($func, ['include', 'include_once', 'require', 'require_once'])) {
+                continue;
+            }
             if (empty($class)) {
                 /** @psalm-suppress ArgumentTypeCoercion */
                 $f = new ReflectionFunction($func);
