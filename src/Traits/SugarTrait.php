@@ -49,6 +49,9 @@ trait SugarTrait
     /**
      * Load a Model class for handling encrypted data.
      *
+     * @param string $name
+     * @param string|null $ns
+     * @return Model
      * @throws DependencyException
      * @throws ReflectionException
      */
@@ -78,6 +81,10 @@ trait SugarTrait
         ];
         foreach ($trials as $trial) {
             if (class_exists($trial)) {
+                if (!is_subclass_of($trial, Model::class, true)) {
+                    continue;
+                }
+                /** @psalm-suppress UnsafeInstantiation */
                 return new $trial($db, $engine);
             }
         }
