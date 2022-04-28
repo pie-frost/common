@@ -4,6 +4,7 @@ namespace PIEFrost\Common\Traits;
 
 use ParagonIE\EasyDB\EasyDB;
 use PIEFrost\Common\Exceptions\DependencyException;
+use PIEFrost\Common\Model;
 use PIEFrost\Common\RuntimeState;
 use Twig\Error\{
     LoaderError,
@@ -13,6 +14,7 @@ use Twig\Error\{
 use PIEFrost\Common\Utilities;
 use PIEFrost\Common\ValueObjects\Redirect;
 use Psr\Http\Message\ResponseInterface;
+use ReflectionException;
 
 /**
  * Syntactic Sugar!
@@ -42,6 +44,44 @@ trait SugarTrait
         int $status = 200
     ): ResponseInterface {
         return Utilities::jsonResponse($data, $headers, $status);
+    }
+
+    /**
+     * Load a Model class for handling encrypted data.
+     *
+     * @throws DependencyException
+     * @throws ReflectionException
+     */
+    public function model(string $name, ?string $ns = null): Model
+    {
+        $db = $this->state->getEasyDB();
+        $engine = $this->state->getEncryptionEngine();
+
+        if (!$ns) {
+            // On level up from the caller, then into the Model sub-namespace
+            $ns = preg_replace(
+                Utilities::NAMESPACE_SUFFIX_REGEX,
+                '\\Model',
+                Utilities::getCallerNamespace(1)
+            );
+        }
+        // Trim all
+        $ns = trim($ns, '\\');
+
+        $trials = [
+            $ns . '\\' . $name,
+            $ns . 's\\' . $name,
+            preg_replace(Utilities::NAMESPACE_SUFFIX_REGEX, '', $ns) . '\\' .$name,
+            preg_replace(Utilities::NAMESPACE_SUFFIX_REGEX, '', $ns) . 's\\' .$name,
+            $ns . '\\Model\\' . $name,
+            $ns . '\\Models\\' . $name,
+        ];
+        foreach ($trials as $trial) {
+            if (class_exists($trial)) {
+                return new $trial($db, $engine);
+            }
+        }
+        throw new DependencyException("Could not load model: {$name}");
     }
 
     public function respond(
