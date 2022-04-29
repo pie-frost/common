@@ -13,6 +13,17 @@ abstract class BaseHandler implements HandlerInterface
     protected array $vars = [];
 
     /**
+     * Override me! Called before handle();
+     *
+     * @return static
+     */
+    public function init(): self
+    {
+        /* NOP */
+        return $this;
+    }
+
+    /**
      * @param RuntimeState $state
      * @return self
      */
