@@ -17,7 +17,7 @@ abstract class BaseHandler implements HandlerInterface
      *
      * @return static
      */
-    public function init(): self
+    public function init(): static
     {
         /* NOP */
         return $this;

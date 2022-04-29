@@ -7,6 +7,14 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 interface HandlerInterface extends RequestHandlerInterface
 {
+
+    /**
+     * Override me! Called before handle();
+     *
+     * @return static
+     */
+    public function init(): static;
+
     /**
      * @param RuntimeState $state
      * @return self
