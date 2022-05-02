@@ -4,6 +4,7 @@ namespace PIEFrost\Common;
 
 use PIEFrost\Common\Interfaces\HandlerInterface;
 use PIEFrost\Common\Traits\SugarTrait;
+use Psr\Http\Message\ResponseInterface;
 
 abstract class BaseHandler implements HandlerInterface
 {
@@ -21,6 +22,17 @@ abstract class BaseHandler implements HandlerInterface
     {
         /* NOP */
         return $this;
+    }
+
+    /**
+     * Override me!
+     *
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     */
+    public function decorate(ResponseInterface $response): ResponseInterface
+    {
+        return $response;
     }
 
     /**
