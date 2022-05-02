@@ -121,6 +121,19 @@ trait SugarTrait
 
     /**
      * @param string $name
+     * @param mixed $value
+     * @return static
+     *
+     * @throws DependencyException
+     */
+    public function setTwigVar(string $name, mixed $value): static
+    {
+        $this->state->getTwig()->addGlobal($name, $value);
+        return $this;
+    }
+
+    /**
+     * @param string $name
      * @param array $context
      * @return string
      *
