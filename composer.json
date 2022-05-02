@@ -22,7 +22,7 @@
     "php": "^8",
     "nikic/fast-route": "^1",
     "paragonie/certainty": "^2",
-    "paragonie/ciphersweet": "^2",
+    "paragonie/ciphersweet": "^3",
     "paragonie/csp-builder": "^2",
     "paragonie/easydb": "^2",
     "paragonie/ionizer": "^1",
