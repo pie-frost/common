@@ -71,11 +71,25 @@ trait SugarTrait
         // Trim all
         $ns = trim($ns, '\\');
 
+        $oneUp = preg_replace(Utilities::NAMESPACE_SUFFIX_REGEX, '', $ns);
+        $twoUp = preg_replace(Utilities::NAMESPACE_SUFFIX_REGEX, '', $oneUp);
+        $threeUp = preg_replace(Utilities::NAMESPACE_SUFFIX_REGEX, '', $twoUp);
+
         $trials = [
             $ns . '\\' . $name,
             $ns . 's\\' . $name,
-            preg_replace(Utilities::NAMESPACE_SUFFIX_REGEX, '', $ns) . '\\' .$name,
-            preg_replace(Utilities::NAMESPACE_SUFFIX_REGEX, '', $ns) . 's\\' .$name,
+            $oneUp . '\\' .$name,
+            $oneUp . 's\\' .$name,
+            $oneUp . '\\Model\\' . $name,
+            $oneUp . '\\Models\\' . $name,
+            $twoUp . '\\' .$name,
+            $twoUp . 's\\' .$name,
+            $twoUp . '\\Model\\' . $name,
+            $twoUp . '\\Models\\' . $name,
+            $threeUp . '\\' .$name,
+            $threeUp . 's\\' .$name,
+            $threeUp . '\\Model\\' . $name,
+            $threeUp . '\\Models\\' . $name,
             $ns . '\\Model\\' . $name,
             $ns . '\\Models\\' . $name,
         ];
