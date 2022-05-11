@@ -24,7 +24,7 @@
     "paragonie/certainty": "^2",
     "paragonie/ciphersweet": "^3",
     "paragonie/csp-builder": "^2",
-    "paragonie/easydb": "^2",
+    "paragonie/easydb": "^3",
     "paragonie/ionizer": "^1",
     "psr/http-message": "^1",
     "psr/http-server-handler": "^1",
