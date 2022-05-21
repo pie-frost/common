@@ -19,10 +19,10 @@
   },
   "license": "proprietary",
   "require": {
-    "php": "^8",
+    "php": "^8.1",
     "nikic/fast-route": "^1",
     "paragonie/certainty": "^2",
-    "paragonie/ciphersweet": "^3",
+    "paragonie/ciphersweet": "^4",
     "paragonie/csp-builder": "^2",
     "paragonie/easydb": "^3",
     "paragonie/ionizer": "^1",
