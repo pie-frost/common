@@ -57,9 +57,6 @@ trait SugarTrait
      */
     public function model(string $name, ?string $ns = null): Model
     {
-        $db = $this->state->getEasyDB();
-        $engine = $this->state->getEncryptionEngine();
-
         if (!$ns) {
             // On level up from the caller, then into the Model sub-namespace
             $ns = preg_replace(
@@ -99,7 +96,7 @@ trait SugarTrait
                     continue;
                 }
                 /** @psalm-suppress UnsafeInstantiation */
-                return new $trial($db, $engine);
+                return new $trial($this->state);
             }
         }
         throw new DependencyException("Could not load model: {$name}");
