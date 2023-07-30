@@ -5,7 +5,9 @@ namespace PIEFrost\Common;
 use ParagonIE\CipherSweet\CipherSweet;
 use ParagonIE\EasyDB\EasyDB;
 use PIEFrost\Common\Exceptions\DependencyException;
+use PIEFrost\Common\Cache\ModelCache;
 use Twig\Environment;
+use function is_null;
 
 class RuntimeState
 {
@@ -13,6 +15,7 @@ class RuntimeState
     protected ?EasyDB $db = null;
     protected ?Environment $twig = null;
     protected ?Router $router = null;
+    protected ?ModelCache $modelCache = null;
 
     /**
      * @throws DependencyException
@@ -56,6 +59,28 @@ class RuntimeState
             throw new DependencyException("Twig not injected");
         }
         return $this->twig;
+    }
+
+    /**
+     * @throws DependencyException
+     */
+    public function getModelCache(): ModelCache
+    {
+        if (is_null($this->modelCache)) {
+            throw new DependencyException("ModelCache not injected");
+        }
+        return $this->modelCache;
+    }
+
+    public function hasModelCache(): bool
+    {
+        return !is_null($this->modelCache);
+    }
+
+    public function withModelCache(ModelCache $modelCache): self
+    {
+        $this->modelCache = $modelCache;
+        return $this;
     }
 
     public function withEasyDB(EasyDB $db): self

@@ -68,6 +68,15 @@ trait SugarTrait
         // Trim all
         $ns = trim($ns, '\\');
 
+        // Check the model cache (if it was installed)
+        if ($this->state->hasModelCache()) {
+            $modelCache = $this->state->getModelCache();
+            $model = $modelCache->getModel($name, $ns);
+            if (!empty($model)) {
+                return $model;
+            }
+        }
+
         $oneUp = preg_replace(Utilities::NAMESPACE_SUFFIX_REGEX, '', $ns);
         $twoUp = preg_replace(Utilities::NAMESPACE_SUFFIX_REGEX, '', $oneUp);
         $threeUp = preg_replace(Utilities::NAMESPACE_SUFFIX_REGEX, '', $twoUp);
@@ -96,7 +105,12 @@ trait SugarTrait
                     continue;
                 }
                 /** @psalm-suppress UnsafeInstantiation */
-                return new $trial($this->state);
+                $model = new $trial($this->state);
+                // If we have a model cache installed
+                if (!empty($modelCache)) {
+                    $modelCache->storeModel($name, $ns, $model);
+                }
+                return $model;
             }
         }
         throw new DependencyException("Could not load model: {$name}");
