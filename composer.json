@@ -21,7 +21,7 @@
   "require": {
     "php": "^8.1",
     "nikic/fast-route": "^1",
-    "paragonie/certainty": "^2.9",
+    "paragonie/certainty": "^2.9|^3",
     "paragonie/ciphersweet": ">= 4.7",
     "paragonie/csp-builder": "^3",
     "paragonie/easydb": "^3",
