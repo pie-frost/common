@@ -9,3 +9,6 @@
 
 This repository just contains some common components
 (i.e. convenience wrappers for third-party libraries).
+
+See the [Documentation](docs) for more information.
+
