@@ -2,9 +2,13 @@
 declare(strict_types=1);
 namespace PIEFrost\Common;
 
+use PIEFrost\Common\Exceptions\RequestException;
 use PIEFrost\Common\Interfaces\HandlerInterface;
 use PIEFrost\Common\Traits\SugarTrait;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\{
+    ResponseInterface,
+    ServerRequestInterface
+};
 
 abstract class BaseHandler implements HandlerInterface
 {
@@ -22,6 +26,16 @@ abstract class BaseHandler implements HandlerInterface
     {
         /* NOP */
         return $this;
+    }
+
+    /**
+     * Oveerride this in derived classes.
+     *
+     * @throws RequestException
+     */
+    public function preprocess(ServerRequestInterface $request): ServerRequestInterface
+    {
+        return $request;
     }
 
     /**
