@@ -16,6 +16,6 @@ class RequestTimingDecoratorTest extends TestCase
         );
         $got = $request->getAttribute('request_start_time');
         $this->assertNotEmpty($got);
-        $this->assertGreaterThan(microtime(true), $got);
+        $this->assertLessThan(microtime(true), $got);
     }
 }
