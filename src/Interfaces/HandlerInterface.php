@@ -2,12 +2,21 @@
 declare(strict_types=1);
 namespace PIEFrost\Common\Interfaces;
 
+use PIEFrost\Common\Exceptions\RequestException;
 use PIEFrost\Common\RuntimeState;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 interface HandlerInterface extends RequestHandlerInterface
 {
+    /**
+     * Override me! Called before handle();
+     *
+     * @throws RequestException
+     */
+    public function preprocess(ServerRequestInterface $request): ServerRequestInterface;
+
     /**
      * Override me! Called after handle();
      *

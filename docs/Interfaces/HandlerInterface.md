@@ -5,6 +5,11 @@ This interface must be implemented by all handler classes. It extends
 
 ## Interface Methods
 
+### `preprocess(ServerRequestInterface $request): ServerRequestInterface`
+
+Process the request decorators (if any). Returns the (decorated?) `ServerRequestInterface` object on success.
+Throws a [`RequestException`](../Exceptions.md#requestexception) on failure.
+
 ### `handle(ServerRequestInterface $request): ResponseInterface`
 
 This method is the main entry point for a handler. It is inherited from `Psr\Http\Server\RequestHandlerInterface`.
