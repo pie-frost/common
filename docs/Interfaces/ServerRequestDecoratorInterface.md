@@ -9,3 +9,4 @@ This is essentially a request-only middleware.
 ### `decorate(ServerRequestInterface $request): ServerRequestInterface`
 
 This method takes a `ServerRequestInterface` and returns a modified `ServerRequestInterface`.
+Upon failure, it throws a [`RequestException`](../Exceptions.md#requestexception).
